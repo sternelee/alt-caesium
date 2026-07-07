@@ -41,7 +41,7 @@ const PROGRESS_UPDATE_INTERVAL: Duration = Duration::from_secs(1);
 const FALLBACK_THREAD_COUNT: usize = 1;
 
 fn main() {
-    let args = CommandLineArgs::parse();
+    let args = CommandLineArgs::parse_from(wild::args());
 
     if args.files.is_empty() {
         if args.json {

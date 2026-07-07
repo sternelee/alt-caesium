@@ -33,6 +33,7 @@ colored = "3.0"
 bytesize = "2.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+wild = "2.2"
 
 [dev-dependencies]
 tempfile = "3.21"
