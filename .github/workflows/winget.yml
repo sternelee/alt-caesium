@@ -11,4 +11,4 @@ jobs:
           identifier: SaeraSoft.CaesiumCLT
           max-versions-to-keep: 10
           installers-regex: '\.zip$'
-          token: ${{ secrets.WINGET_TOKEN }}
+          token: ${{ secrets.RELEASE_TOKEN }}
