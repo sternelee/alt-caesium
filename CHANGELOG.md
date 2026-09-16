@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.5.0
+
+### Added
+
+- **Keep Orientation**: Added `--keep-orientation` flag to preserve the EXIF orientation tag when stripping metadata (#104)
+
+---
+
 ## v1.4.0
 
 ### Added

@@ -80,6 +80,10 @@ pub struct CommandLineArgs {
     #[arg(short, long)]
     pub exif: bool,
 
+    /// Keep the EXIF orientation tag even when other metadata is stripped
+    #[arg(long)]
+    pub keep_orientation: bool,
+
     /// Preserve original file timestamps
     #[arg(long)]
     pub keep_dates: bool,

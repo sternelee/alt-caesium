@@ -48,6 +48,7 @@ pub struct CompressionOptions {
     pub max_size: Option<usize>,
     pub lossless: bool,
     pub exif: bool,
+    pub keep_orientation: bool,
     pub png_opt_level: u8,
     pub zopfli: bool,
     pub width: Option<u32>,
@@ -429,6 +430,7 @@ fn build_compression_parameters(options: &CompressionOptions, buffer: &[u8]) -> 
     parameters.webp.lossless = options.lossless;
 
     parameters.keep_metadata = options.exif;
+    parameters.keep_rotation = options.keep_orientation;
 
     parameters.jpeg.chroma_subsampling = options.jpeg_chroma_subsampling;
     parameters.jpeg.progressive = !options.jpeg_baseline;
@@ -506,7 +508,7 @@ fn build_resize_parameters(
     buffer: &[u8],
     mime_type: Option<String>,
 ) -> Result<(), Box<dyn Error>> {
-    let (width, height) = get_real_resolution(buffer, mime_type, options.exif)?;
+    let (width, height) = get_real_resolution(buffer, mime_type, options.exif || options.keep_orientation)?;
 
     if options.width.is_some() || options.height.is_some() {
         parameters.width = options.width.unwrap_or(0);
@@ -1010,6 +1012,22 @@ mod tests {
     }
 
     #[test]
+    fn test_keep_orientation_parameters() {
+        let input_path = absolute(PathBuf::from("samples/level_1_0/j1.jpg")).unwrap();
+        let buffer = std::fs::read(&input_path).unwrap();
+
+        // keep_orientation is passed through independently of exif
+        for (exif, keep_orientation) in [(false, false), (false, true), (true, false), (true, true)] {
+            let mut options = setup_options();
+            options.exif = exif;
+            options.keep_orientation = keep_orientation;
+            let params = build_compression_parameters(&options, &buffer).unwrap();
+            assert_eq!(params.keep_metadata, exif);
+            assert_eq!(params.keep_rotation, keep_orientation);
+        }
+    }
+
+    #[test]
     fn test_min_savings_skips_files() {
         let input_files = vec![absolute(PathBuf::from("samples/j0.JPG")).unwrap()];
 
@@ -1096,6 +1114,7 @@ mod tests {
             max_size: None,
             keep_dates: false,
             exif: true,
+            keep_orientation: false,
             png_opt_level: 0,
             jpeg_chroma_subsampling: ChromaSubsampling::Auto,
             jpeg_baseline: false,

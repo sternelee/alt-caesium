@@ -36,6 +36,8 @@
 
 - `-e, --exif`  
   Keeps EXIF metadata info during compression, if present. This can slightly increase the output file size.
+- `--keep-orientation`  
+  Keeps the EXIF orientation tag even when the other metadata is stripped.
 - `--keep-dates`  
   Keeps the original last modified and last accessed date information, if possible.
 - `--strip-icc`  

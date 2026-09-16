@@ -328,6 +328,7 @@ fn build_compression_options(args: &CommandLineArgs, base_path: &Path) -> Compre
         max_size: args.compression.max_size,
         keep_dates: args.keep_dates,
         exif: args.exif,
+        keep_orientation: args.keep_orientation,
         png_opt_level: args.png_opt_level,
         jpeg_chroma_subsampling: parse_jpeg_chroma_subsampling(args.jpeg_chroma_subsampling),
         jpeg_baseline: args.jpeg_baseline,
@@ -422,6 +423,7 @@ mod tests {
         assert_eq!(options.short_edge, None);
         assert!(options.keep_dates);
         assert!(options.exif);
+        assert!(options.keep_orientation);
         assert_eq!(options.png_opt_level, 5);
         assert!(options.jpeg_chroma_subsampling == ChromaSubsampling::CS420);
         assert!(options.jpeg_baseline);
@@ -523,6 +525,7 @@ mod tests {
             jpeg_baseline: true,
             zopfli: true,
             exif: true,
+            keep_orientation: true,
             keep_dates: true,
             suffix: Some("_compressed".to_string()),
             recursive: true,
