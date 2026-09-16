@@ -22,11 +22,11 @@ version = "1.5.0"
 
 [dependencies]
 bytesize = "2.0"
-clap = {version = "4.5", features = ["derive"]}
+clap = {version = "4.6", features = ["derive"]}
 colored = "3.0"
-imagesize = "0.14"
+imagesize = "0.15"
 indicatif = {version = "0.18.0", features = ["rayon"]}
-infer = "0.19"
+infer = "0.22"
 kamadak-exif = "0.6"
 libcaesium = "0.21.1"
 rayon = "1.11"
